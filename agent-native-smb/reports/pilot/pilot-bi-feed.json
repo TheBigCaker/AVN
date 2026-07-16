@@ -1,0 +1,106 @@
+{
+  "generated_at": "2026-06-02T22:47:55.987Z",
+  "source_csv": "/tmp/workspace/Sol-Mech-R-D/Agent-Native-SMB/reports/pilot/pilot-roi-qualified-sample.csv",
+  "cadence": {
+    "owner": "pilot-ops-lead",
+    "frequency": "weekly",
+    "day_of_week": "Monday",
+    "time_utc": "16:00",
+    "distribution_list": [
+      "ops@agent-native-smb.local",
+      "finance@agent-native-smb.local",
+      "product@agent-native-smb.local"
+    ]
+  },
+  "edge_cases": [
+    {
+      "case_id": "EC-001",
+      "scenario": "Unknown part SKU present in AI parsed payload blocks invoicing",
+      "owner": "billing-engineering",
+      "status": "mitigation-defined"
+    },
+    {
+      "case_id": "EC-002",
+      "scenario": "Duplicate field log submission for same job and period",
+      "owner": "field-ops",
+      "status": "mitigation-defined"
+    },
+    {
+      "case_id": "EC-003",
+      "scenario": "Missing AI parsed data when admin attempts approve-and-invoice",
+      "owner": "platform-engineering",
+      "status": "mitigation-defined"
+    },
+    {
+      "case_id": "EC-004",
+      "scenario": "Invalid due_date format causes invoice rejection",
+      "owner": "finance-ops",
+      "status": "mitigation-defined"
+    }
+  ],
+  "records": [
+    {
+      "week": "1",
+      "period_start": "2026-05-04",
+      "period_end": "2026-05-10",
+      "active_operators": 6,
+      "jobs_processed": 18,
+      "admin_hours_baseline": 18,
+      "admin_hours_pilot": 10,
+      "invoice_turnaround_hours_baseline": 48,
+      "invoice_turnaround_hours_pilot": 16,
+      "overdue_recovery_baseline_usd": 2100,
+      "overdue_recovery_pilot_usd": 2850,
+      "nps_or_cs_score": 52,
+      "churn_risk_accounts": 2
+    },
+    {
+      "week": "2",
+      "period_start": "2026-05-11",
+      "period_end": "2026-05-17",
+      "active_operators": 7,
+      "jobs_processed": 23,
+      "admin_hours_baseline": 19,
+      "admin_hours_pilot": 9,
+      "invoice_turnaround_hours_baseline": 46,
+      "invoice_turnaround_hours_pilot": 14,
+      "overdue_recovery_baseline_usd": 2200,
+      "overdue_recovery_pilot_usd": 3000,
+      "nps_or_cs_score": 55,
+      "churn_risk_accounts": 1
+    },
+    {
+      "week": "3",
+      "period_start": "2026-05-18",
+      "period_end": "2026-05-24",
+      "active_operators": 7,
+      "jobs_processed": 25,
+      "admin_hours_baseline": 20,
+      "admin_hours_pilot": 9,
+      "invoice_turnaround_hours_baseline": 44,
+      "invoice_turnaround_hours_pilot": 12,
+      "overdue_recovery_baseline_usd": 2300,
+      "overdue_recovery_pilot_usd": 3180,
+      "nps_or_cs_score": 57,
+      "churn_risk_accounts": 1
+    }
+  ],
+  "kpi_summary": {
+    "totalJobsProcessed": 66,
+    "adminHoursDelta": -9.67,
+    "adminHoursSignal": "improving",
+    "turnaroundHoursDelta": -32,
+    "turnaroundHoursSignal": "improving",
+    "overdueRecoveryDeltaUsd": 810,
+    "overdueRecoverySignal": "improving",
+    "avgSentiment": 54.67,
+    "avgChurnRiskAccounts": 1.33
+  },
+  "checks": {
+    "dataFeedAutomated": true,
+    "weeklyRoiReviewCadence": true,
+    "edgeCasesDocumented": true,
+    "successThresholdsValidated": true
+  },
+  "phase2_ready": true
+}

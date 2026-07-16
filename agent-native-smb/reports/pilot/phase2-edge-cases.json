@@ -1,0 +1,28 @@
+{
+  "edge_cases": [
+    {
+      "case_id": "EC-001",
+      "scenario": "Unknown part SKU present in AI parsed payload blocks invoicing",
+      "owner": "billing-engineering",
+      "status": "mitigation-defined"
+    },
+    {
+      "case_id": "EC-002",
+      "scenario": "Duplicate field log submission for same job and period",
+      "owner": "field-ops",
+      "status": "mitigation-defined"
+    },
+    {
+      "case_id": "EC-003",
+      "scenario": "Missing AI parsed data when admin attempts approve-and-invoice",
+      "owner": "platform-engineering",
+      "status": "mitigation-defined"
+    },
+    {
+      "case_id": "EC-004",
+      "scenario": "Invalid due_date format causes invoice rejection",
+      "owner": "finance-ops",
+      "status": "mitigation-defined"
+    }
+  ]
+}

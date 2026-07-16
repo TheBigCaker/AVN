@@ -1,0 +1,16 @@
+import tapPredictions from 'public/tap_daily_predictions.json';
+
+/**
+ * Fetch the latest TAP prediction metrics from the static public JSON file
+ */
+export function getLatestPredictions() {
+  try {
+    return {
+      success: true,
+      date: tapPredictions.timestamp ? tapPredictions.timestamp.split('T')[0] : new Date().toISOString().split('T')[0],
+      data: tapPredictions
+    };
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
+}

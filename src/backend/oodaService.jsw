@@ -1,0 +1,90 @@
+import wixUsersBackend from 'wix-users-backend';
+import wixData from 'wix-data';
+import wixPayBackend from 'wix-pay-backend';
+
+/**
+ * Checks a user's subscription tier using Wix Members and pricing plan associations.
+ * Returns the resolved tier: 'free', 'pro', or 'admin' (based on system role).
+ */
+export async function resolveUserTier(memberId) {
+  try {
+    // 1. Check if user is a Co-op Admin/Staff member (based on Wix backend roles)
+    const roles = await wixUsersBackend.currentUser.getRoles();
+    const isAdmin = roles.some(role => role.name === 'Admin' || role.name === 'Coop Staff');
+    if (isAdmin) {
+      return { success: true, tier: 'admin' };
+    }
+
+    // 2. Query Wix Pricing Plans to verify if they have an active 'Pro Employee-Member' plan
+    const activePlans = await wixData.query("PricingPlans/Orders")
+      .eq("buyerId", memberId)
+      .eq("status", "ACTIVE")
+      .find();
+
+    const hasProPlan = activePlans.items.some(plan => plan.planName === 'Pro Employee-Member' || plan.planName === 'Coop Member');
+    
+    return {
+      success: true,
+      tier: hasProPlan ? 'pro' : 'free'
+    };
+  } catch (err) {
+    return { success: false, error: err.message, tier: 'free' };
+  }
+}
+
+/**
+ * Generates a checkout payment token for subscription upgrades via Wix Pay.
+ */
+export async function createUpgradeTransaction(memberId, planType) {
+  try {
+    let amount = 35; // Standard Pro subscription rate
+    if (planType === 'pro_sliding_low') amount = 20;
+    if (planType === 'pro_sliding_high') amount = 50;
+
+    const paymentInfo = {
+      items: [{
+        name: `AVN ${planType.toUpperCase()} Subscription Upgrade`,
+        price: amount,
+        quantity: 1
+      }],
+      amount: amount
+    };
+
+    // Create payment transaction
+    const payment = await wixPayBackend.createPayment(paymentInfo);
+    
+    return {
+      success: true,
+      paymentId: payment.id,
+      amount: amount
+    };
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
+}
+
+/**
+ * Sells ad slots to pro users and logs them to the AVN active ads board.
+ */
+export async function purchaseAdSpace(memberId, adTitle, adLink) {
+  try {
+    // 1. Verify user is Pro (Free users cannot buy ad space directly, they are targets)
+    const checkTier = await resolveUserTier(memberId);
+    if (!checkTier.success || checkTier.tier === 'free') {
+      return { success: false, error: "Only Pro Employee-Members can purchase and post advertisements." };
+    }
+
+    const newAd = {
+      advertiserId: memberId,
+      title: adTitle,
+      linkUrl: adLink,
+      status: "Active",
+      impressionsCount: 0
+    };
+
+    const inserted = await wixData.insert("AVN_ActiveAds", newAd);
+    return { success: true, adId: inserted._id };
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
+}

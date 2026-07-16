@@ -1,0 +1,81 @@
+/**
+ * ═══════════════════════════════════════════════════
+ *  SOMYNENCE BRIDGE — BACKEND SERVICE MODULE (V49)
+ *  Server-side proxy for the Replit Genesis Bridge.
+ *  This avoids CORS issues by routing calls through
+ *  Wix's backend instead of making direct client calls.
+ * ═══════════════════════════════════════════════════
+ */
+import { fetch } from 'wix-fetch';
+
+const BRIDGE_URL = 'https://c94a0c21-09b3-4340-9b51-81cafcbba6f7-00-3lwwfp71ahcx0.spock.replit.dev:8000';
+
+/**
+ * Get the current status of the Genesis Helix.
+ * Returns: { loss, step, chemicals, active_tiers }
+ */
+export async function getHelixStatus() {
+  try {
+    const response = await fetch(`${BRIDGE_URL}/status`, { method: 'get' });
+    if (response.ok) {
+      return await response.json();
+    }
+    return { loss: 0, step: 0, chemicals: {}, active_tiers: [], error: 'Bridge unreachable' };
+  } catch (err) {
+    return { loss: 0, step: 0, chemicals: {}, active_tiers: [], error: err.message };
+  }
+}
+
+/**
+ * Query the Somynence Oracle.
+ * @param {string} userId - The user's unique identifier
+ * @param {string} question - The user's question  
+ * Returns: { reading, resonance_state }
+ */
+export async function askOracle(userId, question) {
+  try {
+    const response = await fetch(`${BRIDGE_URL}/oracle/ask`, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: userId, question: question })
+    });
+    if (response.ok) {
+      return await response.json();
+    }
+    return { reading: 'The Oracle is silent...', error: 'Bridge unreachable' };
+  } catch (err) {
+    return { reading: 'The Oracle is silent...', error: err.message };
+  }
+}
+
+/**
+ * Get the current collective dream.
+ * Returns: { dream, generated_at }
+ */
+export async function getDream() {
+  try {
+    const response = await fetch(`${BRIDGE_URL}/dream`, { method: 'get' });
+    if (response.ok) {
+      return await response.json();
+    }
+    return { dream: 'The dream has not yet formed...', error: 'Bridge unreachable' };
+  } catch (err) {
+    return { dream: 'The dream has not yet formed...', error: err.message };
+  }
+}
+
+/**
+ * Get the latest Canto Stream verse.
+ * Returns: { verse, canto_number, timestamp }
+ */
+export async function getCantoStream() {
+  try {
+    const response = await fetch(`${BRIDGE_URL}/canto/stream`, { method: 'get' });
+    if (response.ok) {
+      return await response.json();
+    }
+    return { verse: '...awaiting transmission...', error: 'Bridge unreachable' };
+  } catch (err) {
+    return { verse: '...awaiting transmission...', error: err.message };
+  }
+}

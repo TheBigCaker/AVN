@@ -1,0 +1,40 @@
+{
+  "name": "agent-native-smb",
+  "version": "1.0.0",
+  "description": "Field-to-bank API for job logs, AI parsing, and invoicing",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "jest --runInBand",
+    "start": "node src/server.js",
+    "pilot:report": "node scripts/pilot-report.js",
+    "phase1:qualify": "node scripts/pilot-report.js --input-csv=reports/pilot/pilot-roi-qualified-sample.csv",
+    "phase2:setup": "node scripts/phase2-readiness.js --input-csv=reports/pilot/pilot-roi-qualified-sample.csv",
+    "db:schema": "node scripts/db-run.js db/schema.sql",
+    "db:seed": "node scripts/db-run.js db/seed.sql",
+    "db:init": "npm run db:schema && npm run db:seed",
+    "test:unit": "jest --runInBand tests/app.test.js tests/invoice.test.js",
+    "test:e2e": "jest --runInBand tests/e2e.postgres.test.js",
+    "test:all": "npm run test && npm run test:e2e"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sol-Mech-R-D/Agent-Native-SMB.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Sol-Mech-R-D/Agent-Native-SMB/issues"
+  },
+  "homepage": "https://github.com/Sol-Mech-R-D/Agent-Native-SMB#readme",
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "supertest": "^7.2.2"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2",
+    "pg": "^8.21.0"
+  }
+}

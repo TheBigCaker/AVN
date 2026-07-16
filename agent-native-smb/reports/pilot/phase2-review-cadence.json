@@ -1,0 +1,11 @@
+{
+  "owner": "pilot-ops-lead",
+  "frequency": "weekly",
+  "day_of_week": "Monday",
+  "time_utc": "16:00",
+  "distribution_list": [
+    "ops@agent-native-smb.local",
+    "finance@agent-native-smb.local",
+    "product@agent-native-smb.local"
+  ]
+}

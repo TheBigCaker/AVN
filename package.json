@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "@wix/cli": "^1.0.0",
+    "@wix/eslint-plugin-cli": "^1.0.0",
+    "eslint": "^8.25.0",
+    "react": "16.14.0"
+  },
+  "scripts": {
+    "postinstall": "wix sync-types",
+    "dev": "wix dev",
+    "lint": "eslint .",
+    "publish-tap": "cp /data/data/com.termux/files/home/TAP_model/assets/tap_daily_check_results.json src/public/tap_daily_predictions.json && wix publish --source local -y"
+  }
+}

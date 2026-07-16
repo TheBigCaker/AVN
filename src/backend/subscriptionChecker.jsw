@@ -1,0 +1,87 @@
+import { orders } from 'wix-pricing-plans-backend';
+import { currentMember } from 'wix-members-backend';
+
+export async function getUserSubscriptionTier() {
+  try {
+    const member = await currentMember.getMember();
+    
+    if (!member) {
+      return {
+        tier: 'free',
+        isLoggedIn: false,
+        showAds: true,
+        planName: null
+      };
+    }
+
+    const response = await orders.listCurrentMemberOrders({
+      status: ['ACTIVE']
+    });
+    
+    const memberOrders = response.orders || [];
+
+    if (memberOrders.length === 0) {
+      return {
+        tier: 'free',
+        isLoggedIn: true,
+        showAds: true,
+        planName: null,
+        memberId: member._id
+      };
+    }
+
+    const activeOrder = memberOrders.sort((a, b) => 
+      new Date(b.startDate) - new Date(a.startDate)
+    )[0];
+    const planName = activeOrder.planName || '';
+    const tier = determineTierFromPlanName(planName);
+    
+    return {
+      tier: tier,
+      isLoggedIn: true,
+      showAds: tier === 'free',
+      planName: planName,
+      planId: activeOrder.planId,
+      orderId: activeOrder._id,
+      status: activeOrder.status,
+      memberId: member._id,
+      startDate: activeOrder.startDate,
+      endDate: activeOrder.currentCycle?.endDate
+    };
+    
+  } catch (error) {
+    console.error('Error checking subscription:', error);
+    return {
+      tier: 'free',
+      isLoggedIn: false,
+      showAds: true,
+      error: error.message
+    };
+  }
+}
+
+function determineTierFromPlanName(planName) {
+  if (!planName) return 'free';
+  
+  const name = planName.toLowerCase();
+  
+  if (name.includes('pro')) {
+    return 'pro';
+  } else if (name.includes('education') || name.includes('edu')) {
+    return 'education';
+  } else if (name.includes('free')) {
+    return 'free';
+  }
+  
+  return 'free';
+}
+
+export async function hasActiveSubscription() {
+  try {
+    const subscriptionInfo = await getUserSubscriptionTier();
+    return subscriptionInfo.tier !== 'free';
+  } catch (error) {
+    console.error('Error checking active subscription:', error);
+    return false;
+  }
+}
