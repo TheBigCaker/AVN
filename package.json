@@ -10,5 +10,8 @@
     "dev": "wix dev",
     "lint": "eslint .",
     "publish-tap": "cp /data/data/com.termux/files/home/TAP_model/assets/tap_daily_check_results.json src/public/tap_daily_predictions.json && wix publish --source local -y"
+  },
+  "dependencies": {
+    "vercel": "^56.3.0"
   }
 }

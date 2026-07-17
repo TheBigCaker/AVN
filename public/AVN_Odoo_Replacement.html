@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AVN Commons</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+main.erp-container {
+  display: block;
+  padding: 30px;
+  background: #080c14;
+  color: #f1f5f9;
+  font-family: 'Outfit', sans-serif;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  max-width: 1100px;
+  margin: auto;
+  box-shadow: 0 15px 45px rgba(0,0,0,0.5);
+}
+div.erp-header {
+  margin-bottom: 25px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: rgba(255,255,255,0.08);
+  padding-bottom: 15px;
+}
+div.erp-header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2em;
+  color: #05c46b;
+  margin: 0;
+}
+div.subtitle {
+  color: #94a3b8;
+  font-size: 0.95em;
+  margin-top: 5px;
+}
+div.erp-layout {
+  display: flex;
+  gap: 30px;
+}
+nav.erp-nav {
+  width: 250px;
+  border-width: 0px 1px 0px 0px;
+  border-style: solid;
+  border-color: rgba(255,255,255,0.08);
+  padding-right: 20px;
+}
+nav.erp-nav ul {
+  padding-left: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+nav.erp-nav ul li {
+  padding: 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+nav.erp-nav ul li:hover {
+  background: rgba(255,255,255,0.03);
+}
+nav.erp-nav ul li.active {
+  background: rgba(5, 196, 107, 0.08);
+  border: 1px solid rgba(5, 196, 107, 0.2);
+  color: #05c46b;
+}
+main.erp-viewport {
+  flex: 1;
+}
+section.module-view {
+  display: none;
+}
+section.module-view.active {
+  display: block;
+}
+section.module-view h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2em;
+  color: #00f2fe;
+  margin-bottom: 20px;
+}
+div.action-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+div.action-bar input {
+  background: #0d1527;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 10px;
+  border-radius: 6px;
+  color: #fff;
+  flex: 1;
+}
+div.action-bar select {
+  background: #0d1527;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 10px;
+  border-radius: 6px;
+  color: #fff;
+}
+button.btn-primary {
+  background: linear-gradient(135deg, #05c46b, #00d2d3);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+div.table-wrapper {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;;
+  overflow: hidden;
+}
+table {
+  width: 100%;
+}
+th, style td {
+  padding: 14px;
+  text-align: left;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: rgba(255,255,255,0.05);
+  font-size: 14px;
+}
+th {
+  color: #94a3b8;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+div.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+div.kanban-column {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 15px;
+}
+div.kanban-column h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  color: #ffc107;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: rgba(255,255,255,0.08);
+  padding-bottom: 8px;
+}
+div.kanban-cards {
+  display: flex;
+  flex-direction: column;;
+  gap: 10px;
+}
+div.kanban-card {
+  background: #101827;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 13px;;
+  line-height: 1.5;;
+  cursor: grab;
+}
+</style>
+</head>
+<body>
+<main class="erp-container">
+<div class="erp-header">
+<h1>
+AVN Sovereign ERP (Odoo Open-Source Replacement)
+</h1>
+<div class="subtitle">
+Modular Enterprise Resource Planning for Unions & Cooperatives
+</div>
+</div>
+<div class="erp-layout">
+<nav class="erp-nav">
+<ul>
+<li class="nav-item active" id="crm">
+🤝 CRM & Leads
+</li>
+<li class="nav-item" id="billing">
+💳 Invoicing & Billing
+</li>
+<li class="nav-item" id="inventory">
+📦 Tool & Stock Inventory
+</li>
+<li class="nav-item" id="hr">
+✊ HR & Union Registry
+</li>
+<li class="nav-item" id="tasks">
+📋 Task Kanban Board
+</li>
+</ul>
+</nav>
+<main class="erp-viewport">
+<section class="module-view active" id="mod-crm">
+<h3>
+Customer Relationship Management
+</h3>
+<div class="action-bar">
+<input id="crm-name-input" placeholder="Lead Name" type="text">
+</input>
+<select id="crm-status-select">
+<option value="new">
+New Lead
+</option>
+<option value="contacted">
+Contacted
+</option>
+<option value="won">
+Coop Agreement Signed
+</option>
+</select>
+<button class="btn-primary" id="btn-add-lead">
+Add Lead
+</button>
+</div>
+<div class="table-wrapper">
+<table id="crm-table">
+<tr>
+<th>
+Name
+</th>
+<th>
+Status
+</th>
+<th>
+Date Added
+</th>
+</tr>
+<tr>
+<td>
+Urban Farmers Association
+</td>
+<td>
+Coop Agreement Signed
+</td>
+<td>
+2026-07-15
+</td>
+</tr>
+</table>
+</div>
+</section>
+<section class="module-view" id="mod-billing">
+<h3>
+Cooperative Invoices & Solidarity Dividends
+</h3>
+<div class="action-bar">
+<input id="bill-client" placeholder="Client Name" type="text">
+</input>
+<input id="bill-amount" placeholder="Invoice Amount ($)" type="number">
+</input>
+<button class="btn-primary" id="btn-add-invoice">
+Generate Invoice
+</button>
+</div>
+<div class="table-wrapper">
+<table id="billing-table">
+<tr>
+<th>
+Client
+</th>
+<th>
+Total Bill
+</th>
+<th>
+AVN 2% Dividend
+</th>
+<th>
+Status
+</th>
+</tr>
+<tr>
+<td>
+Solar Coop Installation
+</td>
+<td>
+$1,500.00
+</td>
+<td>
+$30.00
+</td>
+<td>
+Paid
+</td>
+</tr>
+</table>
+</div>
+</section>
+<section class="module-view" id="mod-inventory">
+<h3>
+Mutual Aid Tool-Belt & Collective Stock
+</h3>
+<div class="action-bar">
+<input id="inv-item" placeholder="Tool/Asset Name" type="text">
+</input>
+<select id="inv-status">
+<option value="available">
+Available for Lending
+</option>
+<option value="checkedout">
+Checked Out (In Use)
+</option>
+</select>
+<button class="btn-primary" id="btn-add-item">
+Register Asset
+</button>
+</div>
+<div class="table-wrapper">
+<table id="inventory-table">
+<tr>
+<th>
+Tool / Good
+</th>
+<th>
+Status
+</th>
+<th>
+Location / Holder
+</th>
+</tr>
+<tr>
+<td>
+Heavy Rotary Hammer Drill
+</td>
+<td>
+Available for Lending
+</td>
+<td>
+Santa Cruz Warehouse
+</td>
+</tr>
+</table>
+</div>
+</section>
+<section class="module-view" id="mod-hr">
+<h3>
+Worker Registry & Co-op Union Tiers
+</h3>
+<div class="table-wrapper">
+<table id="hr-table">
+<tr>
+<th>
+Worker Name
+</th>
+<th>
+Role
+</th>
+<th>
+AVN Tier
+</th>
+<th>
+Benefits Pool Status
+</th>
+</tr>
+<tr>
+<td>
+Bob (Plumber)
+</td>
+<td>
+Maintenance Contractor
+</td>
+<td>
+Pro Employee-Member
+</td>
+<td>
+Active (Unioned)
+</td>
+</tr>
+</table>
+</div>
+</section>
+<section class="module-view" id="mod-tasks">
+<h3>
+Cooperative Kanban Dispatch
+</h3>
+<div class="kanban-board">
+<div class="kanban-column" id="col-todo">
+<h4>
+To Do (Open Aid Runs)
+</h4>
+<div class="kanban-cards" id="todo-cards">
+<div class="kanban-card">
+Pick up solar batteries from port
+</div>
+</div>
+</div>
+<div class="kanban-column" id="col-progress">
+<h4>
+In Progress
+</h4>
+<div class="kanban-cards" id="progress-cards">
+<div class="kanban-card">
+Setup secure chat for local grocery union
+</div>
+</div>
+</div>
+<div class="kanban-column" id="col-done">
+<h4>
+Completed Tasks
+</h4>
+<div class="kanban-cards" id="done-cards">
+<div class="kanban-card">
+Draft bylaws for plumber guild
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<script type="text/javascript">
+var navItems = document.querySelectorAll('.nav-item'); var modules = document.querySelectorAll('.module-view'); navItems.forEach(function(item) { item.addEventListener('click', function() { navItems.forEach(function(nav) { nav.classList.remove('active'); }); item.classList.add('active'); var target = item.id; modules.forEach(function(mod) { mod.classList.remove('active'); }); document.getElementById('mod-' + target).classList.add('active'); }); }); document.getElementById('btn-add-lead').addEventListener('click', function() { var name = document.getElementById('crm-name-input').value; var status = document.getElementById('crm-status-select').options[document.getElementById('crm-status-select').selectedIndex].text; if (!name) return; var table = document.getElementById('crm-table'); var row = table.insertRow(-1); row.insertCell(0).innerText = name; row.insertCell(1).innerText = status; row.insertCell(2).innerText = new Date().toISOString().split('T')[0]; document.getElementById('crm-name-input').value = ''; }); document.getElementById('btn-add-invoice').addEventListener('click', function() { var client = document.getElementById('bill-client').value; var amount = parseFloat(document.getElementById('bill-amount').value); if (!client || isNaN(amount)) return; var table = document.getElementById('billing-table'); var row = table.insertRow(-1); var div = amount * 0.02; row.insertCell(0).innerText = client; row.insertCell(1).innerText = '$' + amount.toFixed(2); row.insertCell(2).innerText = '$' + div.toFixed(2); row.insertCell(3).innerText = 'Pending'; document.getElementById('bill-client').value = ''; document.getElementById('bill-amount').value = ''; }); document.getElementById('btn-add-item').addEventListener('click', function() { var item = document.getElementById('inv-item').value; var status = document.getElementById('inv-status').options[document.getElementById('inv-status').selectedIndex].text; if (!item) return; var table = document.getElementById('inventory-table'); var row = table.insertRow(-1); row.insertCell(0).innerText = item; row.insertCell(1).innerText = status; row.insertCell(2).innerText = 'Shared Commons Pool'; document.getElementById('inv-item').value = ''; });
+</script>
+</main>
+</body>
+</html>

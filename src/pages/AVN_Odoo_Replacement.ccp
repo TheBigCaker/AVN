@@ -1,7 +1,6 @@
 @web
 component AVNOdooReplacement
 node main class=erp-container
-  <!-- ERP Header -->
   node div class=erp-header
     node h1
       text "AVN Sovereign ERP (Odoo Open-Source Replacement)"
@@ -11,32 +10,29 @@ node main class=erp-container
     endnode
   endnode
 
-  <!-- Left: ERP Sidebar Navigation -->
   node div class=erp-layout
     node nav class=erp-nav
       node ul
-        node li class="nav-item active" data-mod="crm"
+        node li class="nav-item active" id="crm"
           text "🤝 CRM & Leads"
         endnode
-        node li class="nav-item" data-mod="billing"
+        node li class="nav-item" id="billing"
           text "💳 Invoicing & Billing"
         endnode
-        node li class="nav-item" data-mod="inventory"
+        node li class="nav-item" id="inventory"
           text "📦 Tool & Stock Inventory"
         endnode
-        node li class="nav-item" data-mod="hr"
+        node li class="nav-item" id="hr"
           text "✊ HR & Union Registry"
         endnode
-        node li class="nav-item" data-mod="tasks"
+        node li class="nav-item" id="tasks"
           text "📋 Task Kanban Board"
         endnode
       endnode
     endnode
 
-    <!-- Right: Active Module Viewport -->
     node main class=erp-viewport
       
-      <!-- Module 1: CRM -->
       node section id="mod-crm" class="module-view active"
         node h3
           text "Customer Relationship Management"
@@ -85,9 +81,8 @@ node main class=erp-container
             endnode
           endnode
         endnode
-      endsection
+      endnode
 
-      <!-- Module 2: Invoicing & Billing -->
       node section id="mod-billing" class="module-view"
         node h3
           text "Cooperative Invoices & Solidarity Dividends"
@@ -133,9 +128,8 @@ node main class=erp-container
             endnode
           endnode
         endnode
-      endsection
+      endnode
 
-      <!-- Module 3: Inventory -->
       node section id="mod-inventory" class="module-view"
         node h3
           text "Mutual Aid Tool-Belt & Collective Stock"
@@ -181,9 +175,8 @@ node main class=erp-container
             endnode
           endnode
         endnode
-      endsection
+      endnode
 
-      <!-- Module 4: HR & Union Registry -->
       node section id="mod-hr" class="module-view"
         node h3
           text "Worker Registry & Co-op Union Tiers"
@@ -220,9 +213,8 @@ node main class=erp-container
             endnode
           endnode
         endnode
-      endsection
+      endnode
 
-      <!-- Module 5: Tasks Kanban Board -->
       node section id="mod-tasks" class="module-view"
         node h3
           text "Cooperative Kanban Dispatch"
@@ -259,13 +251,13 @@ node main class=erp-container
             endnode
           endnode
         endnode
-      endsection
+      endnode
 
     endnode
   endnode
 
   node script type=text/javascript
-    text "var navItems = document.querySelectorAll('.nav-item'); var modules = document.querySelectorAll('.module-view'); navItems.forEach(function(item) { item.addEventListener('click', function() { navItems.forEach(function(nav) { nav.classList.remove('active'); }); item.classList.add('active'); var target = item.getAttribute('data-mod'); modules.forEach(function(mod) { mod.classList.remove('active'); }); document.getElementById('mod-' + target).classList.add('active'); }); }); document.getElementById('btn-add-lead').addEventListener('click', function() { var name = document.getElementById('crm-name-input').value; var status = document.getElementById('crm-status-select').options[document.getElementById('crm-status-select').selectedIndex].text; if (!name) return; var table = document.getElementById('crm-table'); var row = table.insertRow(-1); row.insertCell(0).innerText = name; row.insertCell(1).innerText = status; row.insertCell(2).innerText = new Date().toISOString().split('T')[0]; document.getElementById('crm-name-input').value = ''; }); document.getElementById('btn-add-invoice').addEventListener('click', function() { var client = document.getElementById('bill-client').value; var amount = parseFloat(document.getElementById('bill-amount').value); if (!client || isNaN(amount)) return; var table = document.getElementById('billing-table'); var row = table.insertRow(-1); var div = amount * 0.02; row.insertCell(0).innerText = client; row.insertCell(1).innerText = '$' + amount.toFixed(2); row.insertCell(2).innerText = '$' + div.toFixed(2); row.insertCell(3).innerText = 'Pending'; document.getElementById('bill-client').value = ''; document.getElementById('bill-amount').value = ''; }); document.getElementById('btn-add-item').addEventListener('click', function() { var item = document.getElementById('inv-item').value; var status = document.getElementById('inv-status').options[document.getElementById('inv-status').selectedIndex].text; if (!item) return; var table = document.getElementById('inventory-table'); var row = table.insertRow(-1); row.insertCell(0).innerText = item; row.insertCell(1).innerText = status; row.insertCell(2).innerText = 'Shared Commons Pool'; document.getElementById('inv-item').value = ''; });"
+    text "var navItems = document.querySelectorAll('.nav-item'); var modules = document.querySelectorAll('.module-view'); navItems.forEach(function(item) { item.addEventListener('click', function() { navItems.forEach(function(nav) { nav.classList.remove('active'); }); item.classList.add('active'); var target = item.id; modules.forEach(function(mod) { mod.classList.remove('active'); }); document.getElementById('mod-' + target).classList.add('active'); }); }); document.getElementById('btn-add-lead').addEventListener('click', function() { var name = document.getElementById('crm-name-input').value; var status = document.getElementById('crm-status-select').options[document.getElementById('crm-status-select').selectedIndex].text; if (!name) return; var table = document.getElementById('crm-table'); var row = table.insertRow(-1); row.insertCell(0).innerText = name; row.insertCell(1).innerText = status; row.insertCell(2).innerText = new Date().toISOString().split('T')[0]; document.getElementById('crm-name-input').value = ''; }); document.getElementById('btn-add-invoice').addEventListener('click', function() { var client = document.getElementById('bill-client').value; var amount = parseFloat(document.getElementById('bill-amount').value); if (!client || isNaN(amount)) return; var table = document.getElementById('billing-table'); var row = table.insertRow(-1); var div = amount * 0.02; row.insertCell(0).innerText = client; row.insertCell(1).innerText = '$' + amount.toFixed(2); row.insertCell(2).innerText = '$' + div.toFixed(2); row.insertCell(3).innerText = 'Pending'; document.getElementById('bill-client').value = ''; document.getElementById('bill-amount').value = ''; }); document.getElementById('btn-add-item').addEventListener('click', function() { var item = document.getElementById('inv-item').value; var status = document.getElementById('inv-status').options[document.getElementById('inv-status').selectedIndex].text; if (!item) return; var table = document.getElementById('inventory-table'); var row = table.insertRow(-1); row.insertCell(0).innerText = item; row.insertCell(1).innerText = status; row.insertCell(2).innerText = 'Shared Commons Pool'; document.getElementById('inv-item').value = ''; });"
   endnode
 endnode
 
@@ -310,12 +302,15 @@ endstyle
 
 style nav.erp-nav
   width: 250px
-  border-right: 1px solid rgba(255,255,255,0.08)
+  border-width: 0px 1px 0px 0px
+  border-style: solid
+  border-color: rgba(255,255,255,0.08)
   padding-right: 20px
 endstyle
 
 style nav.erp-nav ul
-  list-style: none
+  padding-left: 0
+  margin: 0
   display: flex
   flex-direction: column
   gap: 12px
@@ -404,13 +399,14 @@ endstyle
 
 style table
   width: 100%
-  border-collapse: collapse
 endstyle
 
 style th, style td
   padding: 14px
   text-align: left
-  border-bottom: 1px solid rgba(255,255,255,0.05)
+  border-width: 0px 0px 1px 0px
+  border-style: solid
+  border-color: rgba(255,255,255,0.05)
   font-size: 14px
 endstyle
 
@@ -421,7 +417,6 @@ style th
   letter-spacing: 1px
 endstyle
 
-/* Kanban styles */
 style div.kanban-board
   display: grid
   grid-template-columns: repeat(3, 1fr)

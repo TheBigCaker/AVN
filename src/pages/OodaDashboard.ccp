@@ -10,9 +10,7 @@ node main class=ooda-container
     endnode
   endnode
 
-  <!-- Grid Layout for OODA Steps -->
   node div class=grid
-    <!-- OBSERVE CARD -->
     node div class=card id=card-observe
       node div class=card-label
         text "1. OBSERVE (User State)"
@@ -45,7 +43,6 @@ node main class=ooda-container
       endnode
     endnode
 
-    <!-- ORIENT CARD -->
     node div class=card id=card-orient
       node div class=card-label
         text "2. ORIENT (Aura & Rules)"
@@ -70,7 +67,6 @@ node main class=ooda-container
       endnode
     endnode
 
-    <!-- DECIDE CARD -->
     node div class=card id=card-decide
       node div class=card-label
         text "3. DECIDE (Resolutions)"
@@ -95,7 +91,6 @@ node main class=ooda-container
       endnode
     endnode
 
-    <!-- ACT CARD -->
     node div class=card id=card-act
       node div class=card-label
         text "4. ACT (Execution)"
@@ -111,7 +106,6 @@ node main class=ooda-container
     endnode
   endnode
 
-  <!-- Ad Space Management -->
   node div class=section-title
     text "ADVERTISING SPACE SOLDOUT PANEL"
   endnode
