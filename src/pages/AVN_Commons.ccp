@@ -3,7 +3,7 @@ component AVNOdooReplacement
 node main class=erp-container
   node div class=erp-header
     node h1
-      text "AVN Sovereign ERP (Odoo Open-Source Replacement)"
+      text "AVN Sovereign Commons Dashboard"
     endnode
     node div class=subtitle
       text "Modular Enterprise Resource Planning for Unions & Cooperatives"

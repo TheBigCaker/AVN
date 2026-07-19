@@ -73,10 +73,16 @@ def compile_ccp_to_html(ccp_path: Path, output_dir: Path):
         traceback.print_exc()
 
 if __name__ == "__main__":
-    src_dir = Path("/data/data/com.termux/files/home/AVN/src/pages")
-    dest_dir = Path("/data/data/com.termux/files/home/AVN/public")
+    src_dir = Path("/data/data/com.termux/files/home/AVN_Commons/src/pages")
+    dest_dir = Path("/data/data/com.termux/files/home/AVN_Commons/public")
     
-    # Compile Odoo Replacement
-    compile_ccp_to_html(src_dir / "AVN_Odoo_Replacement.ccp", dest_dir)
+    # Compile AVN Commons
+    compile_ccp_to_html(src_dir / "AVN_Commons.ccp", dest_dir)
     # Compile OODA/Billing Dashboard
     compile_ccp_to_html(src_dir / "OodaDashboard.ccp", dest_dir)
+    
+    # Copy AVN_Commons.html to index.html
+    import shutil
+    shutil.copy(dest_dir / "AVN_Commons.html", dest_dir / "index.html")
+    print("  🟢 Copied AVN_Commons.html to index.html")
+
